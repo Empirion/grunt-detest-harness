@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+tmp
+
+##################
+# defaults below #
+##################
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
