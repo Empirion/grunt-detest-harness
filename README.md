@@ -101,24 +101,26 @@ In this example, the default options are used to do something with whatever. So 
 
 ```js
 grunt.initConfig({
-  options: {
-		dependencies: [
-			"lib/require",
-			"require.config",
-			"require.test.config"
-		],
-		tests: [ "Scripts/app/**/*test*.js", "Scripts/test/**/*test*.js" ],
-		preloads: [
-			"plug!jquery"
-		],
-		amdBaseUrl: "Scripts"
-	},
-	dev: {},
-	build: {
-		options: {
-			reporter: "vs"
-		}
-	}
+  detest_harness: {
+    options: {
+  		dependencies: [
+  			"lib/require",
+  			"require.config",
+  			"require.test.config"
+  		],
+  		tests: [ "Scripts/app/**/*test*.js", "Scripts/test/**/*test*.js" ],
+  		preloads: [
+  			"plug!jquery"
+  		],
+  		amdBaseUrl: "Scripts"
+  	},
+  	dev: {},
+  	build: {
+  		options: {
+  			reporter: "vs"
+  		}
+  	}
+  }
 });
 ```
 
