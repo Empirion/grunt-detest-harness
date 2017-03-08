@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Tests</title>
+		<meta charset="utf-8">
+
+		<link href="node_modules/mocha/mocha.css" rel="stylesheet" type="text/css" />
+
+<% _.each( dependencies, function ( dependency ) { %>
+		<script src="<%= dependency %>"></script>
+<% }) %>
+
+		<script>
+			require([
+				"mocha",
+				"<%= reporter %>",
+<% _.each( preloads, function ( dep ) { %>
+				"<%= dep %>",
+<% }) %>
+
+			], function ( localMocha, reporter ) {
+				"use strict";
+
+				if ( reporter ) {
+					mocha.reporter( reporter );
+				}
+
+				mocha.setup("<%= mochaStyle %>");
+
+				require([
+<% _.each( tests, function ( test ) { %>
+					"<%= test %>",
+<% }) %>
+				], function () {
+					mocha.run();
+				});
+
+			});
+		</script>
+	</head>
+	<body>
+		<div id="mocha"></div>
+		<div id="test-fixture"></div>
+	</body>
+</html>

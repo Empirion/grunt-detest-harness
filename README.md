@@ -26,13 +26,7 @@ In your project's Gruntfile, add a section named `detest_harness` to the data ob
 grunt.initConfig({
   detest_harness: {
    options: {
-		dependencies: [
-			"Scripts/lib/require.js",
-			"Scripts/require.config.js",
-			"Scripts/require.test.config.js"
-		],
-		tests: [ "Scripts/app/**/*test*.js", "Scripts/test/**/*test*.js" ],
-		amdBaseUrl: "Scripts"
+     // Generic options go here.
 	},
     your_target: {
       // Target-specific file lists and/or options go here.
@@ -43,17 +37,62 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.amdBaseUrl
 Type: `String`
-Default value: `',  '`
+Default value: ``
 
-A string value that is used to do something with whatever.
+Base url for AMD path. This is used to generate the correct require paths for the test files that are found,
+as well as generate the correct physical file paths for AMD paths.
+i.e.:
 
-#### options.punctuation
+```json
+  {
+    amdBaseUrl: "Scripts/foo"
+  }
+```
+turns the file `Scripts/foo/lib/bar.js` into AMD path `lib/bar` and vice versa.
+
+#### options.dependencies
+Type: `Array`
+Default value: `[]`
+
+An array of dependencies that will be inserted into the page as script paths.
+Typically this will include the requirejs file, the main application require configuration file,
+and the require configuration overrides used during testing.
+
+#### options.harness
 Type: `String`
-Default value: `'.'`
+Default value: `mocha`
 
-A string value that is used to do something else with whatever else.
+A built-in harness template, or a file path to a custom defined harness template.
+
+There is currently one built-in harness: `mocha`.
+
+#### options.preloads
+Type: `Array`
+Default value: `[]`
+
+An array of dependencies that must  be require'd before the unit test files are require'd.
+This might be necessary when using plugin loaders that need to have resolved before the tests are being resolved.
+
+#### options.reporter
+Type: `String`
+Default value: ``
+
+A built-in reporter, or an AMD path to a custom defined reporter.
+If no reporter is defined the default (html) reporter is used.
+
+There is currently one built-in reporter: `vs`. This needs to be used in for TFS build integration.
+
+#### options.tests
+Type: `File glob`
+Default value: ``
+
+A file glob that selects all unit test files that ought to be run.
+
+
+
+
 
 ### Usage Examples
 
@@ -62,29 +101,24 @@ In this example, the default options are used to do something with whatever. So 
 
 ```js
 grunt.initConfig({
-  detest_harness: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  detest_harness: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+  options: {
+		dependencies: [
+			"lib/require",
+			"require.config",
+			"require.test.config"
+		],
+		tests: [ "Scripts/app/**/*test*.js", "Scripts/test/**/*test*.js" ],
+		preloads: [
+			"plug!jquery"
+		],
+		amdBaseUrl: "Scripts"
+	},
+	dev: {},
+	build: {
+		options: {
+			reporter: "vs"
+		}
+	}
 });
 ```
 
