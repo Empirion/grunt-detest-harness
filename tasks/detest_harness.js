@@ -38,7 +38,7 @@ module.exports = function (grunt) {
 		var options = this.options({
 			mochaStyle: "bdd",
 			harness: "mocha",
-			runner: "testrunner.html",
+			runner: "detest_testrunner.html",
 			dependencies: [],
 			reporter: "",
 			preloads: []

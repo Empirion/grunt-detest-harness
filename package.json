@@ -1,7 +1,7 @@
 {
   "name": "grunt-detest-harness",
   "description": "Test harness generator for the Detest test runner.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/Empirion/grunt-detest-harness",
   "author": {
     "name": "gsmeets"
